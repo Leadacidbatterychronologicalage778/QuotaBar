@@ -82,6 +82,7 @@ targets:
       - target: QuotaBarCore
     settings:
       base:
+        GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.roketr.quotabar.tests
 
 schemes:
