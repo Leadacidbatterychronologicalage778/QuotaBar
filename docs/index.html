@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="QuotaBar 下载、使用帮助与自愿赞助。">
+  <title>QuotaBar - Codex 用量菜单栏</title>
+  <link rel="icon" href="assets/quotabar-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <img src="assets/quotabar-icon.png" alt="">
+        <span>QuotaBar</span>
+      </a>
+      <nav aria-label="主要导航">
+        <a href="#download">下载</a>
+        <a href="#sponsor">赞助</a>
+        <a href="privacy.html">隐私</a>
+        <a href="https://github.com/RoketrP/QuotaBar">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">macOS 14+ · Apple 芯片</p>
+      <h1>Codex 用量，<br>常驻菜单栏。</h1>
+      <p class="lede">QuotaBar 实时显示 Codex 剩余百分比、额度窗口和重置倒计时。原生、开源、永久免费。</p>
+      <div class="actions">
+        <a class="button button--primary" href="https://github.com/RoketrP/QuotaBar/releases/latest">下载最新版</a>
+        <a class="button" href="https://github.com/RoketrP/QuotaBar">查看源码</a>
+      </div>
+      <img class="product-shot" src="assets/quotabar-dashboard.png" alt="QuotaBar 实时用量界面">
+    </section>
+
+    <section class="section feature-grid" aria-label="主要功能">
+      <div><strong>实时剩余比例</strong><br><span>菜单栏随时查看当前 Codex 额度。</span></div>
+      <div><strong>重置倒计时</strong><br><span>同时展示短期和周额度窗口。</span></div>
+      <div><strong>本地处理</strong><br><span>没有开发者后端、广告或分析 SDK。</span></div>
+    </section>
+
+    <section class="section" id="download">
+      <h2>安装</h2>
+      <ol class="steps">
+        <li>从 GitHub Releases 下载 `QuotaBar-v1.0.0-macOS-arm64.zip`。</li>
+        <li>解压后把 QuotaBar 拖入“应用程序”文件夹。</li>
+        <li>首次启动时按住 Control 点击 App，选择“打开”，再确认“打开”。</li>
+      </ol>
+      <p class="notice">当前发布包采用临时签名且未经过 Apple 公证，因此首次打开需要额外确认。</p>
+    </section>
+
+    <section class="section">
+      <h2>开始使用</h2>
+      <ol class="steps">
+        <li>启动 QuotaBar，并通过 Codex 官方流程登录 ChatGPT。</li>
+        <li>点击菜单栏中的 QuotaBar 图标查看额度。</li>
+        <li>使用刷新按钮立即更新，或等待每 60 秒自动刷新。</li>
+      </ol>
+    </section>
+
+    <section class="section" id="sponsor">
+      <h2>自愿赞助</h2>
+      <p>QuotaBar 的所有功能永久免费。赞助金额由你决定，不会解锁或限制任何功能。</p>
+      <div class="sponsor-grid">
+        <figure>
+          <figcaption>微信</figcaption>
+          <img src="assets/sponsor-wechat.jpg" alt="微信收款码">
+        </figure>
+        <figure>
+          <figcaption>支付宝</figcaption>
+          <img src="assets/sponsor-alipay.jpg" alt="支付宝收款码">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>反馈</h2>
+      <p>Bug、功能建议和使用问题统一提交到 <a href="https://github.com/RoketrP/QuotaBar/issues">GitHub Issues</a>。请勿上传密码、Cookie 或登录令牌。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">QuotaBar 是独立第三方开源项目，不是 OpenAI 官方产品。</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,101 @@
+name: QuotaBar
+
+options:
+  bundleIdPrefix: com.roketr
+  deploymentTarget:
+    macOS: "14.0"
+  groupSortPosition: top
+  generateEmptyDirectories: true
+
+fileGroups:
+  - Config
+
+settings:
+  base:
+    ARCHS: arm64
+    CLANG_ENABLE_MODULES: YES
+    CODE_SIGN_STYLE: Automatic
+    CURRENT_PROJECT_VERSION: 1
+    DEVELOPMENT_LANGUAGE: zh-Hans
+    ENABLE_HARDENED_RUNTIME: YES
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    MARKETING_VERSION: 1.0.0
+    SWIFT_VERSION: 5.0
+
+targets:
+  QuotaBarCore:
+    type: framework
+    platform: macOS
+    sources:
+      - path: Sources/QuotaBarCore
+    settings:
+      base:
+        DEFINES_MODULE: YES
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.roketr.quotabar.core
+        PRODUCT_NAME: QuotaBarCore
+        SKIP_INSTALL: YES
+
+  QuotaBar:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/QuotaBar
+        excludes:
+          - Resources
+      - path: Sources/QuotaBar/Resources
+        buildPhase: resources
+    dependencies:
+      - target: QuotaBarCore
+        embed: true
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_ENTITLEMENTS: Config/QuotaBar.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Config/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.roketr.quotabar
+        PRODUCT_NAME: QuotaBar
+    postBuildScripts:
+      - name: Embed Codex App Server
+        basedOnDependencyAnalysis: false
+        script: |
+          set -euo pipefail
+          DESTINATION="${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Helpers/codex"
+          "${SRCROOT}/scripts/vendor_codex.sh" "${DESTINATION}"
+          IDENTITY="${EXPANDED_CODE_SIGN_IDENTITY:--}"
+          if [ "${CODE_SIGNING_ALLOWED:-YES}" = "NO" ]; then
+            # Unsigned Debug builds do not have a parent sandbox to inherit.
+            /usr/bin/codesign --force --sign - "${DESTINATION}"
+          else
+            /usr/bin/codesign --force --sign "${IDENTITY}" \
+              --entitlements "${SRCROOT}/Config/Helper.entitlements" \
+              "${DESTINATION}"
+          fi
+
+  QuotaBarCoreTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/QuotaBarCoreTests
+    dependencies:
+      - target: QuotaBarCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.roketr.quotabar.tests
+
+schemes:
+  QuotaBar:
+    build:
+      targets:
+        QuotaBar: all
+        QuotaBarCoreTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - QuotaBarCoreTests
+    archive:
+      config: Release
