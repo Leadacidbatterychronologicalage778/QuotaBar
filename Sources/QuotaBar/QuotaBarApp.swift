@@ -3,11 +3,66 @@ import SwiftUI
 
 @MainActor
 final class QuotaBarAppDelegate: NSObject, NSApplicationDelegate {
-    private var mainWindow: NSWindow?
+    private var floatingPanelController: FloatingPanelController?
+    private var statusItemController: StatusItemController?
+    private var hotKeyController: GlobalHotKeyController?
+    private var settingsWindowController: SettingsWindowController?
+    private var sponsorWindowController: SponsorWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApplication.shared.setActivationPolicy(.accessory)
-        showMainWindow()
+        NSApp.setActivationPolicy(.accessory)
+
+        let model = AppModel.shared
+        let preferences = AppPreferences.shared
+        let sponsorWindow = SponsorWindowController()
+        let settingsWindow = SettingsWindowController {
+            sponsorWindow.show()
+        }
+        sponsorWindowController = sponsorWindow
+        settingsWindowController = settingsWindow
+
+        let floatingPanel = FloatingPanelController(
+            model: model,
+            preferences: preferences
+        )
+        floatingPanelController = floatingPanel
+        let statusItem = StatusItemController(
+            model: model,
+            preferences: preferences,
+            floatingPanel: floatingPanel,
+            openSettings: {
+                settingsWindow.show()
+            }
+        )
+        statusItemController = statusItem
+
+        let hotKey = GlobalHotKeyController.shared
+        hotKey.onToggle = { [weak floatingPanel] in
+            floatingPanel?.toggle()
+        }
+        hotKeyController = hotKey
+
+        Task {
+            await UsageNotificationService.shared.refreshAuthorizationStatus()
+            await model.start()
+        }
+
+#if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        if arguments.contains("--show-settings") {
+            settingsWindow.show()
+        }
+        if arguments.contains("--show-context-menu") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                statusItem.showContextMenuForTesting()
+            }
+        }
+        if arguments.contains("--show-details") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                statusItem.showDetails()
+            }
+        }
+#endif
     }
 
     func applicationShouldHandleReopen(
@@ -15,39 +70,23 @@ final class QuotaBarAppDelegate: NSObject, NSApplicationDelegate {
         hasVisibleWindows flag: Bool
     ) -> Bool {
         if !flag {
-            showMainWindow()
+            statusItemController?.showDetails()
         }
         return true
     }
 
-    private func showMainWindow() {
-        let window: NSWindow
-
-        if let mainWindow {
-            window = mainWindow
-        } else {
-            let model = AppModel.shared
-            let rootView = MenuContentView(model: model)
-                .task {
-                    await model.start()
-                }
-            let newWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 360, height: 620),
-                styleMask: [.titled, .closable, .miniaturizable],
-                backing: .buffered,
-                defer: false
-            )
-            newWindow.title = "QuotaBar"
-            newWindow.contentView = NSHostingView(rootView: rootView)
-            newWindow.isReleasedWhenClosed = false
-            newWindow.center()
-            mainWindow = newWindow
-            window = newWindow
-        }
-
-        window.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+    func applicationShouldSaveApplicationState(_ app: NSApplication) -> Bool {
+        false
     }
+
+    func applicationShouldRestoreApplicationState(_ app: NSApplication) -> Bool {
+        false
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false
+    }
+
 }
 
 @main
@@ -55,27 +94,15 @@ struct QuotaBarApp: App {
     @NSApplicationDelegateAdaptor(QuotaBarAppDelegate.self)
     private var appDelegate
 
-    @StateObject private var model = AppModel.shared
-
     var body: some Scene {
-        MenuBarExtra {
-            MenuContentView(model: model)
-                .task {
-                    await model.start()
-                }
-        } label: {
-            MenuBarStatusLabel(model: model)
-        }
-        .menuBarExtraStyle(.window)
-
-        Settings {
-            SettingsView()
+        // Keeps the SwiftUI app lifecycle alive without adding a second status item.
+        MenuBarExtra(
+            "QuotaBar Scene Host",
+            systemImage: "gauge.with.dots.needle.33percent",
+            isInserted: .constant(false)
+        ) {
+            EmptyView()
         }
 
-        Window("赞助 QuotaBar", id: "sponsor") {
-            SponsorView()
-        }
-        .defaultSize(width: 440, height: 640)
-        .windowResizability(.contentSize)
     }
 }

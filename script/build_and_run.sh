@@ -5,10 +5,13 @@ MODE="${1:-run}"
 APP_NAME="QuotaBar"
 BUNDLE_ID="com.roketr.quotabar"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DERIVED_DATA="$ROOT_DIR/.build/xcode-run"
+DERIVED_DATA="${TMPDIR%/}/quotabar-xcode-run"
 APP_BUNDLE="$DERIVED_DATA/Build/Products/Debug/$APP_NAME.app"
 
 pkill -x "$APP_NAME" >/dev/null 2>&1 || true
+if [ -d "$DERIVED_DATA" ]; then
+  find "$DERIVED_DATA" -depth -delete
+fi
 
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
   xcodebuild \
@@ -17,7 +20,9 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
     -configuration Debug \
     -destination 'platform=macOS' \
     -derivedDataPath "$DERIVED_DATA" \
-    CODE_SIGNING_ALLOWED=NO \
+    CODE_SIGNING_ALLOWED=YES \
+    CODE_SIGN_IDENTITY=- \
+    CODE_SIGN_STYLE=Manual \
     build >/dev/null
 
 open_app() {

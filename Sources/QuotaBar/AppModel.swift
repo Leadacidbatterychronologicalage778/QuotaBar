@@ -117,9 +117,14 @@ final class AppModel: ObservableObject {
                 return
             }
 
-            snapshot = try await client.readRateLimits()
+            let newSnapshot = try await client.readRateLimits()
+            snapshot = newSnapshot
             lastUpdated = Date()
             phase = .ready
+            UsageNotificationService.shared.process(
+                snapshot: newSnapshot,
+                isDemoMode: false
+            )
         } catch {
             present(error)
         }
@@ -154,6 +159,7 @@ final class AppModel: ObservableObject {
         )
 
         isDemoMode = true
+        UsageNotificationService.shared.resetBaseline()
         account = .signedOut
         snapshot = RateLimitSnapshot(buckets: [bucket], fetchedAt: now)
         lastUpdated = now
@@ -179,6 +185,7 @@ final class AppModel: ObservableObject {
             lastUpdated = nil
             account = .signedOut
             phase = .needsLogin
+            UsageNotificationService.shared.resetBaseline()
         } catch {
             present(error)
         }

@@ -4,6 +4,7 @@ import SwiftUI
 
 struct MenuContentView: View {
     @ObservedObject var model: AppModel
+    let openSettings: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -82,7 +83,7 @@ struct MenuContentView: View {
 
             Spacer()
 
-            SettingsLink {
+            Button(action: openSettings) {
                 Image(systemName: "gearshape")
             }
             .buttonStyle(.plain)
@@ -100,31 +101,6 @@ struct MenuContentView: View {
         .foregroundStyle(.secondary)
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-    }
-}
-
-struct MenuBarStatusLabel: View {
-    @ObservedObject var model: AppModel
-
-    var body: some View {
-        if let remaining = model.headlineRemaining {
-            Image(systemName: symbolName(for: remaining))
-            Text("\(Int(remaining.rounded()))%")
-                .monospacedDigit()
-        } else {
-            Image(systemName: "gauge.with.dots.needle.33percent")
-        }
-    }
-
-    private func symbolName(for remaining: Double) -> String {
-        switch remaining {
-        case 67...:
-            return "gauge.with.dots.needle.67percent"
-        case 34..<67:
-            return "gauge.with.dots.needle.50percent"
-        default:
-            return "gauge.with.dots.needle.33percent"
-        }
     }
 }
 
