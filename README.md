@@ -1,23 +1,26 @@
-# QuotaBar
+# QuotaBar - Codex Usage Tracker for macOS
 
 [![macOS](https://img.shields.io/badge/macOS-14%2B-111111?logo=apple)](https://github.com/RoketrP/QuotaBar/releases/latest)
 [![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-arm64-0b9b68)](https://github.com/RoketrP/QuotaBar/releases/latest)
 [![CI](https://github.com/RoketrP/QuotaBar/actions/workflows/ci.yml/badge.svg)](https://github.com/RoketrP/QuotaBar/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-QuotaBar 是一款原生 macOS 菜单栏 App，用来实时显示 Codex 剩余用量、额度窗口和重置倒计时。它永久免费，不包含广告或分析 SDK，也不会把登录信息和用量数据发送给开发者。
+**Free and open-source Codex usage tracker for the macOS menu bar.** Monitor your remaining 5-hour and weekly usage limits, reset countdowns, and account status without leaving your current app.
+
+QuotaBar 是一款原生 macOS 菜单栏 Codex 用量监控工具。它每 60 秒自动刷新 Codex 剩余用量、5 小时与周额度窗口、重置时间，让你不用反复打开 Codex 或 ChatGPT 查看使用限制。永久免费、开源，不含广告与分析 SDK。
+
+[下载最新版](https://github.com/RoketrP/QuotaBar/releases/latest) · [使用帮助](https://roketrp.github.io/QuotaBar/) · [隐私政策](https://roketrp.github.io/QuotaBar/privacy.html) · [问题反馈](https://github.com/RoketrP/QuotaBar/issues)
 
 ![QuotaBar 实时用量界面](docs/assets/quotabar-dashboard.png)
 
-## 功能
+## 为什么使用 QuotaBar
 
-- 在菜单栏显示 Codex 剩余百分比
-- 展示 5 小时、周额度及其他额度窗口
-- 显示重置倒计时，每 60 秒自动刷新
-- 使用 Codex 官方 ChatGPT 登录流程
-- 支持演示模式、手动刷新、退出账户和开机启动
-- 内置固定版本的 Codex 本机服务
-- 永久免费，赞助完全自愿
+- **菜单栏用量监控**：无需切换窗口，直接查看 Codex 剩余百分比。
+- **多个额度窗口**：同时展示 5 小时、周额度及账户返回的其他限制。
+- **重置时间提醒**：显示额度恢复倒计时，每 60 秒自动刷新，也可手动更新。
+- **本地登录与处理**：使用 Codex 官方 ChatGPT 登录流程，不读取浏览器 Cookie。
+- **原生 macOS 体验**：SwiftUI 菜单栏 App，支持开机启动、演示模式和退出账户。
+- **免费开源**：MIT 许可，无广告、无分析 SDK，赞助完全自愿。
 
 ## 下载与安装
 
@@ -40,6 +43,30 @@ shasum -a 256 -c QuotaBar-v1.0.0-macOS-arm64.zip.sha256
 3. 点击菜单栏中的 QuotaBar 图标查看额度和重置时间。
 
 QuotaBar 使用 Codex 官方 App Server 读取当前账户授权的额度，不读取浏览器 Cookie，也不要求用户向开发者提供密码或令牌。
+
+## 常见问题
+
+### 如何在 macOS 菜单栏查看 Codex 剩余用量？
+
+安装并登录 QuotaBar 后，菜单栏会直接显示剩余百分比。点击图标可查看 5 小时额度、周额度和对应的重置倒计时。
+
+### QuotaBar 会增加或修改我的 Codex 额度吗？
+
+不会。QuotaBar 只是读取并展示当前 ChatGPT/Codex 账户返回的用量限制，不会购买、增加、转移或绕过额度。
+
+### 是否需要填写 OpenAI API Key？
+
+不需要。QuotaBar 使用 Codex 官方 ChatGPT 登录流程，不要求把 API Key、密码、Cookie 或登录令牌交给开发者。
+
+### 支持哪些 Mac？
+
+当前 GitHub 版本支持 macOS 14 或更高版本的 Apple 芯片 Mac（M1、M2、M3、M4 及后续 Apple Silicon）。暂不提供 Intel 版本。
+
+## English Overview
+
+QuotaBar is a native SwiftUI menu bar app for monitoring Codex usage limits on macOS. It shows the remaining percentage for the 5-hour and weekly rate-limit windows, displays reset countdowns, and refreshes automatically every 60 seconds. QuotaBar is free, MIT-licensed, local-first, and contains no ads or analytics SDKs.
+
+Download the latest Apple Silicon build from [GitHub Releases](https://github.com/RoketrP/QuotaBar/releases/latest). QuotaBar supports macOS 14 or later and does not require an OpenAI API key.
 
 ## 自愿赞助
 

@@ -3,10 +3,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="QuotaBar 下载、使用帮助与自愿赞助。">
-  <title>QuotaBar - Codex 用量菜单栏</title>
+  <meta name="description" content="QuotaBar 是免费开源的 macOS 菜单栏 Codex 用量监控工具，显示 5 小时与周额度剩余比例、重置倒计时，每 60 秒自动刷新。">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#08764f">
+  <link rel="canonical" href="https://roketrp.github.io/QuotaBar/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="QuotaBar">
+  <meta property="og:title" content="QuotaBar - Codex Usage Tracker for macOS">
+  <meta property="og:description" content="在 macOS 菜单栏查看 Codex 5 小时与周额度、剩余百分比和重置倒计时。免费、开源、本地优先。">
+  <meta property="og:url" content="https://roketrp.github.io/QuotaBar/">
+  <meta property="og:image" content="https://roketrp.github.io/QuotaBar/assets/quotabar-dashboard.png">
+  <meta property="og:image:alt" content="QuotaBar 在 macOS 菜单栏显示 Codex 用量与重置时间">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QuotaBar - Codex Usage Tracker for macOS">
+  <meta name="twitter:description" content="Free and open-source Codex usage monitor for the macOS menu bar.">
+  <meta name="twitter:image" content="https://roketrp.github.io/QuotaBar/assets/quotabar-dashboard.png">
+  <title>QuotaBar - 免费开源的 Codex 用量监控与 macOS 菜单栏工具</title>
   <link rel="icon" href="assets/quotabar-icon.png">
   <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "QuotaBar",
+    "alternateName": "Codex Usage Tracker for macOS",
+    "description": "Free and open-source Codex usage tracker for the macOS menu bar. Monitor remaining 5-hour and weekly limits and reset countdowns.",
+    "url": "https://roketrp.github.io/QuotaBar/",
+    "downloadUrl": "https://github.com/RoketrP/QuotaBar/releases/latest",
+    "codeRepository": "https://github.com/RoketrP/QuotaBar",
+    "softwareVersion": "1.0.0",
+    "operatingSystem": "macOS 14 or later",
+    "applicationCategory": "UtilitiesApplication",
+    "license": "https://opensource.org/license/mit",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "CNY"
+    }
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -17,6 +52,7 @@
       </a>
       <nav aria-label="主要导航">
         <a href="#download">下载</a>
+        <a href="#english">English</a>
         <a href="#sponsor">赞助</a>
         <a href="privacy.html">隐私</a>
         <a href="https://github.com/RoketrP/QuotaBar">GitHub</a>
@@ -28,7 +64,7 @@
     <section class="intro">
       <p class="eyebrow">macOS 14+ · Apple 芯片</p>
       <h1>Codex 用量，<br>常驻菜单栏。</h1>
-      <p class="lede">QuotaBar 实时显示 Codex 剩余百分比、额度窗口和重置倒计时。原生、开源、永久免费。</p>
+      <p class="lede">免费开源的 macOS 菜单栏 Codex 用量监控工具。显示 5 小时与周额度剩余比例、重置倒计时，每 60 秒自动刷新。</p>
       <div class="actions">
         <a class="button button--primary" href="https://github.com/RoketrP/QuotaBar/releases/latest">下载最新版</a>
         <a class="button" href="https://github.com/RoketrP/QuotaBar">查看源码</a>
@@ -37,9 +73,15 @@
     </section>
 
     <section class="section feature-grid" aria-label="主要功能">
-      <div><strong>实时剩余比例</strong><br><span>菜单栏随时查看当前 Codex 额度。</span></div>
-      <div><strong>重置倒计时</strong><br><span>同时展示短期和周额度窗口。</span></div>
+      <div><strong>Codex 剩余用量</strong><br><span>菜单栏随时查看当前账户的剩余百分比。</span></div>
+      <div><strong>5 小时与周额度</strong><br><span>同时展示额度窗口和重置倒计时。</span></div>
       <div><strong>本地处理</strong><br><span>没有开发者后端、广告或分析 SDK。</span></div>
+    </section>
+
+    <section class="section" id="english" lang="en">
+      <h2>Codex usage at a glance</h2>
+      <p>QuotaBar is a native SwiftUI Codex usage tracker for the macOS menu bar. It monitors your remaining 5-hour and weekly usage limits, shows reset countdowns, and refreshes automatically every 60 seconds.</p>
+      <p>It is free, open source, local-first, and does not require an OpenAI API key. The current release supports Apple Silicon Macs running macOS 14 or later.</p>
     </section>
 
     <section class="section" id="download">
