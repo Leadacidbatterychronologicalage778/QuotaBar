@@ -4,6 +4,8 @@ import SwiftUI
 
 struct MenuContentView: View {
     @ObservedObject var model: AppModel
+    @ObservedObject private var preferences = AppPreferences.shared
+    @ObservedObject private var updates = OfficialUpdatesService.shared
     let openSettings: () -> Void
 
     var body: some View {
@@ -60,7 +62,12 @@ struct MenuContentView: View {
             )
         case .ready:
             if let snapshot = model.snapshot {
-                UsageDashboardView(model: model, snapshot: snapshot)
+                UsageDashboardView(
+                    model: model,
+                    snapshot: snapshot,
+                    preferences: preferences,
+                    updates: updates
+                )
             } else {
                 LoadingStateView(
                     title: "正在读取剩余用量",
@@ -107,6 +114,9 @@ struct MenuContentView: View {
 private struct UsageDashboardView: View {
     @ObservedObject var model: AppModel
     let snapshot: RateLimitSnapshot
+    @ObservedObject var preferences: AppPreferences
+    @ObservedObject var updates: OfficialUpdatesService
+    @State private var copiedConfirmation = false
 
     private var windows: [RateLimitWindow] {
         snapshot.preferredBucket?.windows ?? []
@@ -154,6 +164,8 @@ private struct UsageDashboardView: View {
                 }
             }
 
+            OfficialUpdatesCard(preferences: preferences, service: updates)
+
             HStack {
                 if let lastUpdated = model.lastUpdated {
                     Text("更新于 \(lastUpdated, format: .dateTime.hour().minute().second())")
@@ -167,6 +179,15 @@ private struct UsageDashboardView: View {
                     .buttonStyle(.borderless)
                 }
                 Button {
+                    copyUsageSummary()
+                } label: {
+                    Label(
+                        copiedConfirmation ? "已复制" : "复制",
+                        systemImage: copiedConfirmation ? "checkmark" : "doc.on.doc"
+                    )
+                }
+                .buttonStyle(.borderless)
+                Button {
                     Task { await model.refresh() }
                 } label: {
                     Label("刷新", systemImage: "arrow.clockwise")
@@ -176,6 +197,146 @@ private struct UsageDashboardView: View {
             .font(.caption)
         }
         .padding(16)
+    }
+
+    private func copyUsageSummary() {
+        let summary = UsageSummaryFormatter.make(
+            snapshot: snapshot,
+            isDemoMode: model.isDemoMode
+        )
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(summary, forType: .string)
+        copiedConfirmation = true
+
+        Task {
+            try? await Task.sleep(for: .seconds(1.5))
+            copiedConfirmation = false
+        }
+    }
+}
+
+private struct OfficialUpdatesCard: View {
+    @ObservedObject var preferences: AppPreferences
+    @ObservedObject var service: OfficialUpdatesService
+    @State private var showsMore = false
+
+    private var visibleItems: ArraySlice<OfficialUpdateItem> {
+        service.items.prefix(showsMore ? 3 : 1)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Label("AI / Codex 官方动态", systemImage: "sparkles")
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+
+                if preferences.officialUpdatesEnabled {
+                    if service.phase == .loading {
+                        ProgressView()
+                            .controlSize(.mini)
+                    } else {
+                        Button {
+                            Task { await service.refresh() }
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .buttonStyle(.plain)
+                        .help("刷新官方动态")
+                    }
+                }
+            }
+
+            if !preferences.officialUpdatesEnabled {
+                HStack(alignment: .center, spacing: 10) {
+                    Text("每天最多自动读取一次 OpenAI 与 GitHub 官方更新，不发送账户或额度数据。")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 4)
+                    Button("启用") {
+                        preferences.officialUpdatesEnabled = true
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                }
+            } else if service.items.isEmpty {
+                if service.phase == .failed {
+                    Text(service.errorMessage ?? "暂时无法读取官方动态。")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                } else {
+                    Text("正在读取官方动态…")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            } else {
+                ForEach(Array(visibleItems.enumerated()), id: \.element.id) { index, item in
+                    if index > 0 {
+                        Divider()
+                    }
+                    OfficialUpdateRow(item: item, showsSummary: index == 0)
+                }
+
+                if service.items.count > 1 {
+                    Button(showsMore ? "收起" : "再看 \(min(2, service.items.count - 1)) 条") {
+                        withAnimation(.easeInOut(duration: 0.15)) {
+                            showsMore.toggle()
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .padding(12)
+        .background(.primary.opacity(0.045), in: RoundedRectangle(cornerRadius: 12))
+        .task(id: preferences.officialUpdatesEnabled) {
+            await service.refreshIfNeeded(enabled: preferences.officialUpdatesEnabled)
+        }
+    }
+}
+
+private struct OfficialUpdateRow: View {
+    let item: OfficialUpdateItem
+    let showsSummary: Bool
+
+    var body: some View {
+        Button {
+            NSWorkspace.shared.open(item.link)
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(item.title)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.primary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+
+                if showsSummary && !item.summary.isEmpty {
+                    Text(item.summary)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                }
+
+                HStack(spacing: 5) {
+                    Text(item.source.rawValue)
+                    if let publishedAt = item.publishedAt {
+                        Text("·")
+                        Text(publishedAt, format: .dateTime.month().day())
+                    }
+                    Image(systemName: "arrow.up.right")
+                }
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help("在浏览器中打开官方来源")
     }
 }
 

@@ -47,4 +47,5 @@ public enum QuotaBarPreferenceDefaults {
     public static let notificationsEnabled = false
     public static let lowQuotaThreshold = 20
     public static let notifyOnReset = true
+    public static let officialUpdatesEnabled = false
 }

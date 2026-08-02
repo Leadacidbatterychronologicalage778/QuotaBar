@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="QuotaBar 是免费开源的 macOS 菜单栏 Codex 用量监控工具，提供悬浮 HUD、5 小时与周额度、重置倒计时和可选额度提醒。">
+  <meta name="description" content="QuotaBar 是免费开源的 macOS 菜单栏 Codex 用量监控工具，提供悬浮 HUD、额度提醒、官方 AI 动态和用量摘要复制。">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#08764f">
   <link rel="canonical" href="https://roketrp.github.io/QuotaBar/">
@@ -66,7 +66,7 @@
     <section class="intro">
       <p class="eyebrow">macOS 14+ · Apple 芯片</p>
       <h1>Codex 用量，<br>常驻菜单栏。</h1>
-      <p class="lede">免费开源的 macOS 菜单栏 Codex 用量监控工具。用菜单栏或悬浮 HUD 查看 5 小时与周额度、重置倒计时，并可在额度偏低或重置时提醒。</p>
+      <p class="lede">免费开源的 macOS 菜单栏 Codex 用量监控工具。查看 5 小时与周额度、重置倒计时，并可选用额度提醒、官方 AI 动态与用量摘要复制。</p>
       <div class="actions">
         <a class="button button--primary" href="https://github.com/RoketrP/QuotaBar/releases/latest">下载最新版</a>
         <a class="button" href="https://github.com/RoketrP/QuotaBar">查看源码</a>
@@ -80,19 +80,21 @@
     <section class="section feature-grid" aria-label="主要功能">
       <div><strong>菜单栏与悬浮 HUD</strong><br><span>左键详细面板、右键快捷菜单，⌥⌘Q 快速显示 HUD。</span></div>
       <div><strong>额度与重置提醒</strong><br><span>同时展示额度窗口、重置倒计时和可选系统通知。</span></div>
+      <div><strong>官方 AI 动态</strong><br><span>主动启用后，每日最多自动读取一次 OpenAI 与 GitHub 官方更新。</span></div>
+      <div><strong>复制用量摘要</strong><br><span>一键复制额度与重置倒计时，不包含账户信息。</span></div>
       <div><strong>本地优先</strong><br><span>使用官方 Codex 登录流程，没有开发者后端、广告或分析 SDK。</span></div>
     </section>
 
     <section class="section" id="english" lang="en">
       <h2>Codex usage at a glance</h2>
-      <p>QuotaBar is a native SwiftUI Codex usage tracker for the macOS menu bar. Version 1.1 adds a compact floating HUD, a native right-click menu, the ⌥⌘Q global shortcut, and optional low-quota/reset notifications.</p>
+      <p>QuotaBar is a native SwiftUI Codex usage tracker for the macOS menu bar. Version 1.2 adds opt-in official AI updates and one-click usage summary copying.</p>
       <p>It is free, open source, local-first, and does not require an OpenAI API key. The current release supports Apple Silicon Macs running macOS 14 or later.</p>
     </section>
 
     <section class="section" id="download">
       <h2>安装</h2>
       <ol class="steps">
-        <li>从 GitHub Releases 下载 <code>QuotaBar-v1.1.0-macOS-arm64.zip</code>。</li>
+        <li>从 GitHub Releases 下载 <code>QuotaBar-v1.2.0-macOS-arm64.zip</code>。</li>
         <li>解压后把 QuotaBar 拖入“应用程序”文件夹。</li>
         <li>首次启动时按住 Control 点击 App，选择“打开”，再确认“打开”。</li>
       </ol>
@@ -106,6 +108,7 @@
         <li>左键菜单栏图标打开详细面板，右键打开快捷菜单。</li>
         <li>在右键菜单或设置中开启悬浮 HUD，也可以按 ⌥⌘Q 快速切换。</li>
         <li>需要额度提醒时，在设置中主动启用系统通知。</li>
+        <li>需要官方动态时，在详细面板或设置中主动启用。</li>
       </ol>
     </section>
 

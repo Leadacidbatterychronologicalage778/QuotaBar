@@ -34,6 +34,10 @@ final class AppPreferences: ObservableObject {
         didSet { defaults.set(notifyOnReset, forKey: Keys.notifyOnReset) }
     }
 
+    @Published var officialUpdatesEnabled: Bool {
+        didSet { defaults.set(officialUpdatesEnabled, forKey: Keys.officialUpdatesEnabled) }
+    }
+
     private let defaults: UserDefaults
 
     private enum Keys {
@@ -44,6 +48,7 @@ final class AppPreferences: ObservableObject {
         static let notificationsEnabled = "notificationsEnabled"
         static let lowQuotaThreshold = "lowQuotaThreshold"
         static let notifyOnReset = "notifyOnReset"
+        static let officialUpdatesEnabled = "officialUpdatesEnabled"
     }
 
     private init(defaults: UserDefaults = .standard) {
@@ -55,7 +60,8 @@ final class AppPreferences: ObservableObject {
             Keys.globalHotKeyEnabled: QuotaBarPreferenceDefaults.globalHotKeyEnabled,
             Keys.notificationsEnabled: QuotaBarPreferenceDefaults.notificationsEnabled,
             Keys.lowQuotaThreshold: QuotaBarPreferenceDefaults.lowQuotaThreshold,
-            Keys.notifyOnReset: QuotaBarPreferenceDefaults.notifyOnReset
+            Keys.notifyOnReset: QuotaBarPreferenceDefaults.notifyOnReset,
+            Keys.officialUpdatesEnabled: QuotaBarPreferenceDefaults.officialUpdatesEnabled
         ])
 
         showFloatingPanel = defaults.bool(forKey: Keys.showFloatingPanel)
@@ -67,5 +73,6 @@ final class AppPreferences: ObservableObject {
         notificationsEnabled = defaults.bool(forKey: Keys.notificationsEnabled)
         lowQuotaThreshold = defaults.integer(forKey: Keys.lowQuotaThreshold)
         notifyOnReset = defaults.bool(forKey: Keys.notifyOnReset)
+        officialUpdatesEnabled = defaults.bool(forKey: Keys.officialUpdatesEnabled)
     }
 }

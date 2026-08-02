@@ -3,7 +3,7 @@ import Testing
 
 struct QuotaBarPreferencesTests {
     @Test
-    func defaultsMatchTheV11ProductDecisions() {
+    func defaultsMatchProductDecisions() {
         #expect(QuotaBarPreferenceDefaults.showFloatingPanel == false)
         #expect(QuotaBarPreferenceDefaults.floatingAcrossSpaces == false)
         #expect(QuotaBarPreferenceDefaults.statusItemStyle == .iconAndPercentage)
@@ -11,6 +11,7 @@ struct QuotaBarPreferencesTests {
         #expect(QuotaBarPreferenceDefaults.notificationsEnabled == false)
         #expect(QuotaBarPreferenceDefaults.lowQuotaThreshold == 20)
         #expect(QuotaBarPreferenceDefaults.notifyOnReset == true)
+        #expect(QuotaBarPreferenceDefaults.officialUpdatesEnabled == false)
     }
 
     @Test

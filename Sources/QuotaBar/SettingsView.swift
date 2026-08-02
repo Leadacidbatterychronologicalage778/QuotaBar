@@ -30,6 +30,7 @@ struct SettingsView: View {
     @ObservedObject private var preferences = AppPreferences.shared
     @ObservedObject private var notifications = UsageNotificationService.shared
     @ObservedObject private var hotKey = GlobalHotKeyController.shared
+    @ObservedObject private var officialUpdates = OfficialUpdatesService.shared
     @State private var isUpdatingNotifications = false
     let openSponsor: () -> Void
 
@@ -125,8 +126,46 @@ struct SettingsView: View {
                 }
             }
 
+            Section("AI 动态") {
+                Toggle(
+                    "显示 AI / Codex 官方动态",
+                    isOn: Binding(
+                        get: { preferences.officialUpdatesEnabled },
+                        set: { setOfficialUpdatesEnabled($0) }
+                    )
+                )
+
+                Text("启用后每天最多自动访问一次官方 RSS；手动刷新会立即访问。只缓存公开标题、摘要和链接。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                if preferences.officialUpdatesEnabled {
+                    HStack {
+                        Button("立即刷新") {
+                            Task { await officialUpdates.refresh() }
+                        }
+                        .disabled(officialUpdates.phase == .loading)
+
+                        if officialUpdates.phase == .loading {
+                            ProgressView()
+                                .controlSize(.small)
+                        } else if let lastUpdated = officialUpdates.lastUpdated {
+                            Text("更新于 \(lastUpdated, format: .dateTime.month().day().hour().minute())")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+
+                    if let errorMessage = officialUpdates.errorMessage {
+                        Text(errorMessage)
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    }
+                }
+            }
+
             Section("隐私") {
-                Text("QuotaBar 不包含广告或分析 SDK，不会把你的 ChatGPT 登录信息或用量数据发送给开发者。")
+                Text("QuotaBar 不包含广告或分析 SDK，不会把你的 ChatGPT 登录信息或用量数据发送给开发者。AI 动态只有在你主动启用后才访问官方 RSS。")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -173,6 +212,12 @@ struct SettingsView: View {
             await notifications.setNotificationsEnabled(enabled)
             isUpdatingNotifications = false
         }
+    }
+
+    private func setOfficialUpdatesEnabled(_ enabled: Bool) {
+        preferences.officialUpdatesEnabled = enabled
+        guard enabled else { return }
+        Task { await officialUpdates.refreshIfNeeded(enabled: true) }
     }
 
     private func openNotificationSettings() {

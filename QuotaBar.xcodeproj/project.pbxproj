@@ -29,10 +29,13 @@
 		98C91B07E2D950276074CCE7 /* RateLimitModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D313E4D9F930A6335A4F02 /* RateLimitModels.swift */; };
 		98F7E845AAC2EE462874977F /* RateLimitParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CB7CD99373D6B76022421 /* RateLimitParserTests.swift */; };
 		9E1803870308D04499FF92AB /* MenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED7CEB720D1697125C7473 /* MenuContentView.swift */; };
+		A2DC3E7EA20146E0544F3EC6 /* OfficialUpdatesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559288477F88DD0ACF3FDA32 /* OfficialUpdatesService.swift */; };
 		A51A25EB1ACA20A4078BD38B /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1E5BD02DB54730B5F50BDC /* AppPreferences.swift */; };
 		A6E0DAA45CCB685F59509EBC /* GlobalHotKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BA83DF84A3EBDF3E70FBBB /* GlobalHotKeyController.swift */; };
+		AFECBEA47191F76713D3463E /* OfficialUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B69A5211064A3D03EE35BE /* OfficialUpdates.swift */; };
 		B71449D4A684EC7E7A4A05BC /* QuotaBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1D5EDC94FB144E202BD8B /* QuotaBarApp.swift */; };
 		BE496B74C9C7B8FA2A850451 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2DA87046962E2ED3059F65 /* JSONValue.swift */; };
+		C30901045C91F08E1E5A280B /* OfficialUpdatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E5233807F484D80399865 /* OfficialUpdatesTests.swift */; };
 		DF0275B8F8AFB28D56DCA4E9 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A16DF36D8EE336467554FA9 /* StatusItemController.swift */; };
 		E020D2FCC47579335DA8E842 /* sponsor-wechat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5002651F0421AE197346C29 /* sponsor-wechat.jpg */; };
 		E269CCA09F6DF745F47D95FC /* FloatingHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6675F3A661BC44BFC91E87E /* FloatingHUDView.swift */; };
@@ -85,10 +88,13 @@
 		0491187D32E41A7DF22BD198 /* QuotaBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuotaBar.entitlements; sourceTree = "<group>"; };
 		11230882B92AC6FB692C4410 /* FloatingPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelController.swift; sourceTree = "<group>"; };
 		1404B3E847ED3A47C7192600 /* SponsorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorView.swift; sourceTree = "<group>"; };
+		14B69A5211064A3D03EE35BE /* OfficialUpdates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialUpdates.swift; sourceTree = "<group>"; };
 		1F8CB7CD99373D6B76022421 /* RateLimitParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateLimitParserTests.swift; sourceTree = "<group>"; };
+		2B2E5233807F484D80399865 /* OfficialUpdatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialUpdatesTests.swift; sourceTree = "<group>"; };
 		2EF80F2C718D4DB426BDE8CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31BA83DF84A3EBDF3E70FBBB /* GlobalHotKeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKeyController.swift; sourceTree = "<group>"; };
 		340D75FE53988F42B67F78C3 /* QuotaBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuotaBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		559288477F88DD0ACF3FDA32 /* OfficialUpdatesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialUpdatesService.swift; sourceTree = "<group>"; };
 		5856E5762E4499E0E050427C /* CodexAppServerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodexAppServerClient.swift; sourceTree = "<group>"; };
 		5E1E5BD02DB54730B5F50BDC /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 		660496A957F93A8030C224C1 /* UsageAlertEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageAlertEvaluatorTests.swift; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 		39F8D35291BFD2E9FA254458 /* QuotaBarCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				2B2E5233807F484D80399865 /* OfficialUpdatesTests.swift */,
 				D34BD50E281422DF217EFF94 /* QuotaBarPreferencesTests.swift */,
 				1F8CB7CD99373D6B76022421 /* RateLimitParserTests.swift */,
 				660496A957F93A8030C224C1 /* UsageAlertEvaluatorTests.swift */,
@@ -180,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				AE2DA87046962E2ED3059F65 /* JSONValue.swift */,
+				14B69A5211064A3D03EE35BE /* OfficialUpdates.swift */,
 				70974C0A278EAF21970C923B /* QuotaBarPreferences.swift */,
 				E9D313E4D9F930A6335A4F02 /* RateLimitModels.swift */,
 				B32DA5F3D6BC355164BCB488 /* UsageAlertEvaluator.swift */,
@@ -232,6 +240,7 @@
 				11230882B92AC6FB692C4410 /* FloatingPanelController.swift */,
 				31BA83DF84A3EBDF3E70FBBB /* GlobalHotKeyController.swift */,
 				6AED7CEB720D1697125C7473 /* MenuContentView.swift */,
+				559288477F88DD0ACF3FDA32 /* OfficialUpdatesService.swift */,
 				76E1D5EDC94FB144E202BD8B /* QuotaBarApp.swift */,
 				B4BC314599411E2714945DF1 /* SettingsView.swift */,
 				1404B3E847ED3A47C7192600 /* SponsorView.swift */,
@@ -389,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE496B74C9C7B8FA2A850451 /* JSONValue.swift in Sources */,
+				AFECBEA47191F76713D3463E /* OfficialUpdates.swift in Sources */,
 				EFC3D0FCED3D01D210993878 /* QuotaBarPreferences.swift in Sources */,
 				98C91B07E2D950276074CCE7 /* RateLimitModels.swift in Sources */,
 				25F7BE1F8B640E6A0F37B88A /* UsageAlertEvaluator.swift in Sources */,
@@ -407,6 +417,7 @@
 				86309687C8D827CF49D1CE75 /* FloatingPanelController.swift in Sources */,
 				A6E0DAA45CCB685F59509EBC /* GlobalHotKeyController.swift in Sources */,
 				9E1803870308D04499FF92AB /* MenuContentView.swift in Sources */,
+				A2DC3E7EA20146E0544F3EC6 /* OfficialUpdatesService.swift in Sources */,
 				B71449D4A684EC7E7A4A05BC /* QuotaBarApp.swift in Sources */,
 				02CF851EAB0F2698224C2F07 /* SettingsView.swift in Sources */,
 				5E752AF984CCE8CFE2991C3D /* SponsorView.swift in Sources */,
@@ -419,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C30901045C91F08E1E5A280B /* OfficialUpdatesTests.swift in Sources */,
 				3FC4DCA121F8DFA8B5A8B227 /* QuotaBarPreferencesTests.swift in Sources */,
 				98F7E845AAC2EE462874977F /* RateLimitParserTests.swift in Sources */,
 				950B2CCF95E787D75726AA79 /* UsageAlertEvaluatorTests.swift in Sources */,
@@ -593,7 +605,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_LANGUAGE = "zh-Hans";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -608,7 +620,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -655,7 +667,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_LANGUAGE = "zh-Hans";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -676,7 +688,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
